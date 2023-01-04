@@ -27,14 +27,14 @@ public class GamePane extends JPanel {
                 if (cells[x][y]) {
                     g.fillRect(
                             CELL_SIZE * x,
-                            CELL_SIZE * (height - y - 1),
+                            CELL_SIZE * y,
                             CELL_SIZE,
                             CELL_SIZE
                     );
                 } else {
                     g.drawRect(
                             CELL_SIZE * x,
-                            CELL_SIZE * (height - y - 1),
+                            CELL_SIZE * y,
                             CELL_SIZE,
                             CELL_SIZE
                     );
