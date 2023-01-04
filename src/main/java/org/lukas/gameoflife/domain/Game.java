@@ -5,7 +5,9 @@ import java.util.List;
 public class Game {
     private final int width;
     private final int height;
-    private final boolean[][] cells;
+    private boolean[][] cells;
+    private final AliveNeighborCounter neighborCounter;
+
 
     /**
      * Constructor for the game class.
@@ -18,6 +20,31 @@ public class Game {
         this.height = height;
         validateInput(input);
         this.cells = populateCells(width, height, input);
+        this.neighborCounter = new AliveNeighborCounter();
+    }
+
+    public boolean[][] getCurrentGrid() {
+        return cells;
+    }
+
+    public void calculateNextState() {
+        cells = getNextGridState();
+    }
+
+    private boolean[][] getNextGridState() {
+        boolean[][] nextGridState = new boolean[width][height];
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                int aliveNeighbors = neighborCounter.count(cells, x, y);
+                boolean isCellAlive = cells[x][y];
+                boolean isCellNotOvercrowded = isCellAlive && aliveNeighbors >= 2 && aliveNeighbors <= 3;
+                boolean shouldCellComeAlive = !isCellAlive && aliveNeighbors == 3;
+                nextGridState[x][y] = isCellNotOvercrowded || shouldCellComeAlive;
+            }
+        }
+
+        return nextGridState;
     }
 
     private void validateInput(List<Cell> input) {
