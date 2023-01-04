@@ -9,7 +9,7 @@ public class Main {
         SwingUtilities.invokeLater(new GameUI(
                 60,
                 40,
-                "src/main/resources/glider",
+                "src/main/resources/gun",
                 20
         ));
     }
